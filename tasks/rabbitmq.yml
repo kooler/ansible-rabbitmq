@@ -2,7 +2,7 @@
 # RabbitMQ user and vhost management
 
 - name: Ensure the users is removed
-  rabbitmq_user: user="{{ item }}" state=absent
+  rabbitmq_user: user="{{ item }}" state=absent node="rabbit@{{ rabbitmq_cluster_master }}"
   with_items: rabbitmq_users_removed
   tags: [configuration,rabbitmq]
 
@@ -20,6 +20,7 @@
     write_priv: "{{ item.write_priv|default('.*') }}"
     vhost: "{{ item.vhost|default('/') }}"
     tags: "{{ item.tags|default('') }}"
+    node: "rabbit@{{ rabbitmq_cluster_master }}"
   with_items: rabbitmq_users
   tags: [configuration,rabbitmq]
 
@@ -39,4 +40,3 @@
   with_items: rabbitmq_plugins
   notify: restart rabbitmq-server
   tags: [configuration,rabbitmq]
-

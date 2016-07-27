@@ -32,4 +32,3 @@ rabbitmq_users:
 
 rabbitmq_users_removed:
   - guest
-
